@@ -1,4 +1,5 @@
-#Spark Authentication
+# Spark Authentication
+
 A simple spark java implementation of login and signup.
 
 ## Technologies and frameworks used
