@@ -35,8 +35,6 @@ public class App {
 
         post("/login",(req,res) ->{
             Map<String, Object> model = new HashMap<>();
-            model.put("template","templates/login.vtl");
-
             String email = req.queryParams("email");
             String password = req.queryParams("password");
 
@@ -46,6 +44,7 @@ public class App {
             }
             else {
                 if (!(User.allEmails().contains(email))) {
+                    model.put("template","templates/login.vtl");
                     System.out.println("Email does not exist");
                 }
                 else {
@@ -53,10 +52,13 @@ public class App {
 
                     if(user.getUserPassword().equals(password))
                     {
-                        System.out.println("Welcome");
+                        model.put("email", email);
+                        model.put("template","templates/home.vtl");
                     }
                     else
                     {
+                        model.put("template","templates/login.vtl");
+
                         System.out.println("wrong password");
                     }
                 }
@@ -98,7 +100,8 @@ public class App {
                     {
                         User user = new User(email,password);
                         user.register();
-                        res.redirect("/");
+                        model.put("email" ,user.getEmail());
+                        model.put("template","templates/home.vtl");
                     }
                     else {
                         System.out.println("password doesnt match");
